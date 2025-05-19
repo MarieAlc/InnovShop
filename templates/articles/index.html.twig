@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles!{% endblock %}
+
+{% block body %}
+<h1>Nos articles</h1>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% for article in articles %}
+        <div style="border: 1px solid #ccc; padding: 15px; width: 300px;">
+
+            <a href="{{ path('article_detail', { id: article.id }) }}">
+                <h2>{{ article.titre }}</h2>
+            </a>
+          
+            <img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}"style="width: 100%; height: auto;">
+            
+            <p><strong>Prix :</strong> {{ article.prix }} €</p>
+
+            <p>Couleurs disponibles :</p>            
+            {% for couleur in article.couleurs %}
+                <p>{{ couleur.valeur }}</p>               
+            {% endfor %}
+        
+           <p>Tailles disponibles :</p>            
+            {% for taille in article.tailles %}
+                <p>{{ taille.valeur }}</p>
+            {% endfor %}
+
+            <p>{{ article.detail|slice(0, 100) ~ '...' }}</p>
+
+        </div>
+
+    {% endfor %}
+</div>
+{% endblock %}

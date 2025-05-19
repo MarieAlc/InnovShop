@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+
+    <!-- Articles à la une -->
+    <h2 class="mb-4">📰 Articles à la une</h2>
+    <div class="row">
+        {% for article in aLaUne %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <img src="{{ article.image }}" class="card-img-top" alt="{{ article.titre }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.titre }}</h5>
+                        <p class="card-text">{{ article.detail|slice(0, 100) ~ '...' }}</p>
+                        <a href="{{ path('article_detail', { id: article.id }) }}" class="btn btn-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Derniers articles ajoutés -->
+    <h2 class="mt-5 mb-4">🆕 Derniers articles ajoutés</h2>
+    <div class="row">
+        {% for article in derniersArticles %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <img src="{{ article.image }}" class="card-img-top" alt="{{ article.titre }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.titre }}</h5>
+                        <p class="card-text">{{ article.detail|slice(0, 100) }}...</p>
+                        <a href="{{ path('article_detail', { id: article.id }) }}" class="btn btn-secondary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

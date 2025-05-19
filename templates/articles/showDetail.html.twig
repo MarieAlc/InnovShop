@@ -1,0 +1,27 @@
+<h1>{{ article.titre }}</h1>
+<img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+
+<p>{{ article.detail }}</p>
+<p><strong>Prix :</strong> {{ article.prix }} €</p>
+
+<form method="post" action="#">
+  <div class="mb-3">
+    <label for="taille" class="form-label">Taille :</label>
+    <select name="taille" id="taille" class="form-select">
+      {% for taille in article.tailles %}
+        <option value="{{ taille.id }}">{{ taille.valeur }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="couleur" class="form-label">Couleur :</label>
+    <select name="couleur" id="couleur" class="form-select">
+      {% for couleur in article.couleurs %}
+        <option value="{{ couleur.id }}">{{ couleur.valeur }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Ajouter au panier 🛒</button>
+</form>
