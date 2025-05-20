@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon profil{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="mb-4">Modifier mon profil</h1>
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6">{{ form_row(form.nom) }}</div>
+            <div class="col-md-6">{{ form_row(form.prenom) }}</div>
+            <div class="col-md-6">{{ form_row(form.email) }}</div>
+            <div class="col-md-6">{{ form_row(form.telephone) }}</div>
+            <div class="col-md-12">{{ form_row(form.adresse) }}</div>
+        </div>
+
+        <div class="mt-4">{{ form_row(form.save) }}</div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

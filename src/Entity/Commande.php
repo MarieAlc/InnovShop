@@ -16,7 +16,7 @@ class Commande
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $user = null;
+    private ?User $user = null;
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
@@ -28,19 +28,19 @@ class Commande
     private ?string $adresseLivraison = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $creatAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser(): ?user
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?user $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
 
@@ -85,12 +85,12 @@ class Commande
 
     public function getCreatAt(): ?\DateTimeImmutable
     {
-        return $this->creatAt;
+        return $this->createdAt;
     }
 
-    public function setCreatAt(\DateTimeImmutable $creatAt): static
+    public function setCreatAt(\DateTimeImmutable $createdAt): static
     {
-        $this->creatAt = $creatAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

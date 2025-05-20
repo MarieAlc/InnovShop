@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+<h2>Mon profil</h2>
+
+<p><strong>Nom :</strong> {{ user.nom }}</p>
+<p><strong>Prénom :</strong> {{ user.prenom }}</p>
+<p><strong>Email :</strong> {{ user.email }}</p>
+<p><strong>Téléphone :</strong> {{ user.telephone }}</p>
+<p><strong>Adresse de livraison :</strong> {{ user.adresse }}</p>
+
+<a href="{{ path('profil_edit') }}">✏️ Modifier mon profil</a><br>
+<a href="{{ path('change_password') }}">🔐 Changer mon mot de passe</a><br>
+<a href="{{ path('profil_commandes') }}">📦 Suivre mes commandes</a><br>
+<a href="{{ path('delete_profil') }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">🗑️ Supprimer mon compte</a>
+
+
+
+{% endblock %}
