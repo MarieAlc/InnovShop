@@ -47,13 +47,20 @@ class Articles
      * @var Collection<int, Panier>
      */
     #[ORM\OneToMany(targetEntity: Panier::class, mappedBy: 'article')]
-    private Collection $taille;
+    private Collection $paniers;
+
+    /**
+     * @var Collection<int, CommandeLigne>
+     */
+    #[ORM\OneToMany(targetEntity: CommandeLigne::class, mappedBy: 'article')]
+    private Collection $commandeLignes;
 
     public function __construct()
     {
         $this->tailles = new ArrayCollection();
         $this->couleurs = new ArrayCollection();
-        $this->taille = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
+        $this->commandeLignes = new ArrayCollection();
     }
 
 
@@ -180,9 +187,59 @@ class Articles
     /**
      * @return Collection<int, Panier>
      */
-    public function getTaille(): Collection
+    public function getPaniers(): Collection
     {
-        return $this->taille;
+        return $this->paniers;
+    }
+    public function addPanier(Panier $panier): static{
+    if (!$this->paniers->contains($panier)) {
+        $this->paniers[] = $panier;
+        $panier->setArticle($this);
+    }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): static
+    {
+        if ($this->paniers->removeElement($panier)) {
+           
+            if ($panier->getArticle() === $this) {
+                $panier->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandeLigne>
+     */
+    public function getCommandeLignes(): Collection
+    {
+        return $this->commandeLignes;
+    }
+
+    public function addCommandeLigne(CommandeLigne $commandeLigne): static
+    {
+        if (!$this->commandeLignes->contains($commandeLigne)) {
+            $this->commandeLignes->add($commandeLigne);
+            $commandeLigne->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeLigne(CommandeLigne $commandeLigne): static
+    {
+        if ($this->commandeLignes->removeElement($commandeLigne)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeLigne->getArticle() === $this) {
+                $commandeLigne->setArticle(null);
+            }
+        }
+
+        return $this;
     }
 }
 

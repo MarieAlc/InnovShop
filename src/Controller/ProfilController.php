@@ -49,6 +49,7 @@ final class ProfilController extends AbstractController
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordForm::class);
         $form->handleRequest($request);
+        dump($form->getErrors(true));
 
         if($form->isSubmitted() && $form->isValid()){
             $oldPassword = $form->get('currentPassword')->getData();

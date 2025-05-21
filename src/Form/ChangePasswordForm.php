@@ -8,8 +8,10 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
-use Webmozart\Assert\Assert as AssertAssert;
+use Symfony\Component\Validator\Constraints ;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ChangePasswordForm extends AbstractType
 {
@@ -20,7 +22,7 @@ class ChangePasswordForm extends AbstractType
                 'label'=> 'Ancien mot de passe',
                 'mapped'=> false,
                 'constraints'=>[
-                    new Assert\NotBlank(['message'=>'Veuillez entrer votre mot de passe actuel. ']),
+                    new NotBlank(['message'=>'Veuillez entrer votre mot de passe actuel. ']),
                 ],
             ])
             ->add('newPassword', RepeatedType::class,[
@@ -31,11 +33,15 @@ class ChangePasswordForm extends AbstractType
                 'first_options'=>['label'=>'Nouveau mot de passe'],
                 'second_options'=>['label' => 'Confirmer le mot de passe'],
                 'constraints'=> [
-                    new Assert\NotBlank(['message'=>'Veuillez entrer un nouveau mot de passe']),
-                    new Assert\Length([
+                    new NotBlank(['message'=>'Veuillez entrer un nouveau mot de passe']),
+                    new Length([
                         'min'=> 6,
                         'minMessage'=> 'Le mot de passe doit contenir au moins {{ limit }} caractères.'
                     ]),
+                    new Regex([
+                    'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+                    'message' => 'Le mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre.',
+            ]),
                 ],
 
             ])

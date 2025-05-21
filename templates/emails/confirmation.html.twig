@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de votre commande</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+
+    <h2>Bonjour {{ user.prenom }},</h2>
+
+    <p>Merci pour votre commande sur <strong>InnovShop</strong> !</p>
+
+    <h3>Détails de votre commande :</h3>
+
+    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+        <thead>
+            <tr>
+            
+                <th>Article</th>
+                <th>Couleur</th>
+                <th>Taille</th>
+                <th>Prix</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ligne in commande.commandeLignes %}
+                <tr>
+                
+                    <td>{{ ligne.article.titre }}</td>
+                    <td>
+                        
+                        {{ ligne.couleur.valeur is defined ? ligne.couleur.valeur : ligne.couleur }}
+                    </td>
+                    <td>
+                        {{ ligne.taille.valeur is defined ? ligne.taille.valeur : ligne.taille }}
+                    </td>
+                    <td>{{ ligne.prix|number_format(2, ',', ' ') }} €</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4 style="text-align: right; margin-top: 20px;">Total : <strong>{{ commande.total|number_format(2, ',', ' ') }} €</strong></h4>
+
+    <p>Nous vous tiendrons informé de l’expédition. N'hésitez pas à nous contacter si vous avez la moindre question.</p>
+
+    <p>À bientôt sur <strong>InnovShop</strong> !</p>
+</body>
+</html>

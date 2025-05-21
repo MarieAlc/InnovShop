@@ -1,10 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.titre }}{% endblock %}
+
+{% block body %}
+
 <h1>{{ article.titre }}</h1>
-<img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+<img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}" class="img-fluid rounded shadow" style="max-width: 400px; height: 300px; object-fit: cover;">
 
 <p>{{ article.detail }}</p>
 <p><strong>Prix :</strong> {{ article.prix }} €</p>
 
-<form method="post" action="#">
+<form method="post" action="{{ path('ajoutPanier', { id: article.id }) }}">
   <div class="mb-3">
     <label for="taille" class="form-label">Taille :</label>
     <select name="taille" id="taille" class="form-select">
@@ -25,3 +31,4 @@
 
   <button type="submit" class="btn btn-primary">Ajouter au panier 🛒</button>
 </form>
+{% endblock %}

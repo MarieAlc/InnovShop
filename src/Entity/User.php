@@ -45,8 +45,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $telephone = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $adresse = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $numero = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $rue = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $codePostal = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $ville = null;
     /**
     * @var Collection<int, Panier>
     */
@@ -177,16 +186,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
+    public function getNumero(): ?string {
+
+         return $this->numero;
+    }
+    public function setNumero(?string $numero): static {
+
+         $this->numero = $numero; return $this; 
     }
 
-    public function setAdresse(string $adresse): static
-    {
-        $this->adresse = $adresse;
+    public function getRue(): ?string {
+        
+        return $this->rue; 
+    }
+    public function setRue(?string $rue): static { 
+        
+        $this->rue = $rue; return $this; 
+    }
 
-        return $this;
+    public function getCodePostal(): ?string { 
+
+        return $this->codePostal; 
+    }
+    public function setCodePostal(?string $codePostal): static {
+        
+        $this->codePostal = $codePostal; return $this; 
+    }
+
+    public function getVille(): ?string { 
+        
+        return $this->ville; 
+    }
+    public function setVille(?string $ville): static { 
+        
+        $this->ville = $ville; return $this; 
     }
 
     /**
