@@ -25,9 +25,16 @@ class Couleurs
     #[ORM\ManyToMany(targetEntity: Articles::class, inversedBy: 'couleurs')]
     private Collection $article;
 
+    /**
+     * @var Collection<int, Panier>
+     */
+    #[ORM\OneToMany(targetEntity: Panier::class, mappedBy: 'couleur')]
+    private Collection $paniers;
+
     public function __construct()
     {
         $this->article = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,5 +76,40 @@ class Couleurs
         $this->article->removeElement($article);
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Panier>
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): static
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers->add($panier);
+            $panier->setCouleur($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): static
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getCouleur() === $this) {
+                $panier->setCouleur(null);
+            }
+        }
+
+        return $this;
+    }
+
+     public function __toString(): string
+    {
+        return $this->valeur; 
     }
 }

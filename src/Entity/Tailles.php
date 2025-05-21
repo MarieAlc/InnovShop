@@ -6,7 +6,7 @@ use App\Repository\TaillesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use app\Entity\Articles;
+use App\Entity\Articles;
 
 #[ORM\Entity(repositoryClass: TaillesRepository::class)]
 class Tailles
@@ -25,9 +25,16 @@ class Tailles
     #[ORM\ManyToMany(targetEntity: Articles::class, inversedBy: 'tailles')]
     private Collection $article;
 
+    /**
+     * @var Collection<int, Panier>
+     */
+    #[ORM\OneToMany(targetEntity: Panier::class, mappedBy: 'taille')]
+    private Collection $paniers;
+
     public function __construct()
     {
         $this->article = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,4 +77,39 @@ class Tailles
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Panier>
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): static
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers->add($panier);
+            $panier->setTaille($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): static
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getTaille() === $this) {
+                $panier->setTaille(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+{
+    return $this->valeur; 
+}
 }

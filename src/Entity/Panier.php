@@ -21,14 +21,15 @@ class Panier
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $taille = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $couleur = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'paniers')]
+    private ?Tailles $taille = null;
+
+    #[ORM\ManyToOne(inversedBy: 'paniers')]
+    private ?Couleurs $couleur = null;
 
     public function __construct()
     {
@@ -53,29 +54,6 @@ class Panier
         return $this;
     }
 
-    public function getTaille(): ?string
-    {
-        return $this->taille;
-    }
-
-    public function setTaille(string $taille): static
-    {
-        $this->taille = $taille;
-
-        return $this;
-    }
-
-    public function getCouleur(): ?string
-    {
-        return $this->couleur;
-    }
-
-    public function setCouleur(string $couleur): static
-    {
-        $this->couleur = $couleur;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -96,6 +74,30 @@ class Panier
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTaille(): ?Tailles
+    {
+        return $this->taille;
+    }
+
+    public function setTaille(?Tailles $taille): static
+    {
+        $this->taille = $taille;
+
+        return $this;
+    }
+
+    public function getCouleur(): ?Couleurs
+    {
+        return $this->couleur;
+    }
+
+    public function setCouleur(?Couleurs $couleur): static
+    {
+        $this->couleur = $couleur;
 
         return $this;
     }

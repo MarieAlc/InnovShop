@@ -20,9 +20,11 @@
           <tr>
             <td>{{ commande.createdAt|date('d/m/Y H:i') }}</td>
             <td>{{ commande.total }} €</td>
-            <td>{{ commande.status }}</td>
-            <td>{{ commande.adresseLivraison }}</td>
+            <td>{{ commande.status }}</td> 
+            <td>{{commande.numero}} {{commande.rue}}, {{commande.codePostal}} {{commande.ville}}</td>          
           </tr>
+         
+        
         {% endfor %}
       </tbody>
     </table>

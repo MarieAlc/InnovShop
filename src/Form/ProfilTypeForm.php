@@ -17,7 +17,10 @@ class ProfilTypeForm extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('telephone')
-            ->add('adresse')
+            ->add('numero')
+            ->add('rue')
+            ->add('codePostal')
+            ->add('ville')
             ->add('save',SubmitType::class,[
                 'label'=>'Mettre à jour',
                 'attr'=>['class'=>'btn btn-primary mt-3']
