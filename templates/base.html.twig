@@ -36,6 +36,10 @@
               <a href="{{ path('profil') }}" class="nav-link">Mon profil</a>
             {% endif %}
 
+            {% if app.user and is_granted ('ROLE_ADMIN')%}
+              <a href="{{ path('admin') }}" class="nav-link">Espace Administrateur</a>
+            {% endif %}
+
 
             {% if not app.user %}
               <li class="nav-item">

@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\ArticlesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticlesRepository::class)]
@@ -16,13 +15,13 @@ class Articles
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: 'text')]
     private ?string $detail = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: 'text')]
     private ?string $specification = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private ?string $prix = null;
 
     #[ORM\Column(length: 255, nullable:true)]
@@ -30,6 +29,12 @@ class Articles
 
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $aLaUne = false;
+
+    #[ORM\Column(type: 'datetime')]
+    private \DateTimeInterface $createdAt;
 
     /**
      * @var Collection<int, Tailles>
@@ -55,12 +60,17 @@ class Articles
     #[ORM\OneToMany(targetEntity: CommandeLigne::class, mappedBy: 'article')]
     private Collection $commandeLignes;
 
+    #[ORM\ManyToOne(inversedBy: 'articles')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Types $type = null;
+
     public function __construct()
     {
         $this->tailles = new ArrayCollection();
         $this->couleurs = new ArrayCollection();
         $this->paniers = new ArrayCollection();
         $this->commandeLignes = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
 
@@ -127,6 +137,26 @@ class Articles
     {
         $this->titre = $titre;
 
+        return $this;
+    }
+    public function isALaUne(): bool
+    {
+        return $this->aLaUne;
+    }
+
+    public function setALaUne(bool $aLaUne): self
+    {
+        $this->aLaUne = $aLaUne;
+        return $this;
+    }
+    public function getCreatedAt(): \DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
         return $this;
     }
 
@@ -238,6 +268,18 @@ class Articles
                 $commandeLigne->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?Types
+    {
+        return $this->type;
+    }
+
+    public function setType(?Types $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

@@ -5,6 +5,9 @@ use App\Entity\Articles;
 use App\Entity\Commande;
 use App\Entity\User;
 use App\Controller\Admin\ArticlesCrudController;
+use App\Entity\Couleurs;
+use App\Entity\Tailles;
+use App\Entity\Types;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -41,10 +44,21 @@ class DashboardController extends AbstractDashboardController
     yield MenuItem::section('Gestion du catalogue');
     yield MenuItem::linkToCrud('Articles', 'fas fa-box', Articles::class);
 
+    yield MenuItem::section('Gestion couleurs, type et tailles');
+    yield MenuItem::linkToCrud('Couleurs', 'fa fa-palette', Couleurs::class);
+    yield MenuItem::linkToCrud('Tailles', 'fa fa-ruler', Tailles::class);
+    yield MenuItem::linkToCrud('Types', 'fa fa-tags', Types::class);
+
     yield MenuItem::section('Commandes');
     yield MenuItem::linkToCrud('Commandes', 'fas fa-shopping-cart', Commande::class);
 
     yield MenuItem::section('Utilisateurs');
     yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
+
+
+    yield MenuItem::section('Retour au site');
+    yield MenuItem::linkToUrl('Page d’accueil', 'fas fa-home', '/');
 }
+
+
 }
