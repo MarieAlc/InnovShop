@@ -24,7 +24,7 @@ class Commande
     private ?User $user = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private ?string $status = 'En attente';
 
     #[ORM\Column]
     private ?float $total = null;
@@ -164,6 +164,23 @@ class Commande
         }
 
         return $this;
+    }
+    public function getArticlesList(): string
+    {
+        $titre = [];
+
+        foreach ($this->commandeLignes as $ligne) {
+            $article = $ligne->getArticle();
+            if ($article) {
+                $titre[] = $article->getTitre();
+            }
+        }
+
+        return implode(', ', $titre);
+    }
+    public function getAdresseComplete(): string
+    {
+        return sprintf('%s %s, %s %s', $this->numero, $this->rue, $this->codePostal, $this->ville);
     }
 
     

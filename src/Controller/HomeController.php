@@ -12,12 +12,27 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(ArticlesRepository $articlesRepository): Response
     {
-       $articleAlaUne = $articlesRepository->findBy([], null, 3);
+    
+        $articlesALaUne = $articlesRepository->findBy(['aLaUne' => true], ['createdAt' => 'DESC'], 3);
+        $dernierArticles = $articlesRepository->findBy([],['id'=>'DESC'], 3);
+        $idsALaUne = array_map(fn($article) => $article->getId(), $articlesALaUne);
+        $queryBuilder = $articlesRepository->createQueryBuilder('a');
 
-       $dernierArticles = $articlesRepository->findBy([],['id'=>'DESC'], 3);
+        if (!empty($idsALaUne)) {
+            $queryBuilder
+                ->where($queryBuilder->expr()->notIn('a.id', ':ids'))
+                ->setParameter('ids', $idsALaUne);
+        }
 
+        $dernierArticles = $queryBuilder
+            ->orderBy('a.id', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+
+       
        return $this->render('home/index.html.twig', [
-        'aLaUne'=>$articleAlaUne,
+        'aLaUne'=>$articlesALaUne,
         'derniersArticles'=>$dernierArticles,
        ]);
     }

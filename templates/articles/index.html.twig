@@ -4,33 +4,79 @@
 
 {% block body %}
 <h1>Nos articles</h1>
-
-<div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    {% for article in articles %}
-        <div style="border: 1px solid #ccc; padding: 15px; width: 300px;">
-
-            <a href="{{ path('article_detail', { id: article.id }) }}">
-                <h2>{{ article.titre }}</h2>
-            </a>
-          
-            <img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}"style="width: 100%; height: auto;">
-            
-            <p><strong>Prix :</strong> {{ article.prix }} €</p>
-
-            <p>Couleurs disponibles :</p>            
-            {% for couleur in article.couleurs %}
-                <p>{{ couleur.valeur }}</p>               
-            {% endfor %}
-        
-           <p>Tailles disponibles :</p>            
-            {% for taille in article.tailles %}
-                <p>{{ taille.valeur }}</p>
-            {% endfor %}
-
-            <p>{{ article.detail|slice(0, 100) ~ '...' }}</p>
-
+<div class="filtres" style="margin-bottom: 30px; padding: 15px; border: 1px solid #ccc;">
+    <form method="get" action="{{ path('articles') }}" style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <div>
+            <label for="type">Type :</label><br>
+            <select name="type" id="type">
+                <option value="">Tous</option>
+                {% for type in types %}
+                    <option value="{{ type.id }}" {{ app.request.get('type') == type.id ? 'selected' : '' }}>
+                        {{ type.valeur }}
+                    </option>
+                {% endfor %}
+            </select>
         </div>
 
-    {% endfor %}
+        <div>
+            <label for="couleur">Couleur :</label><br>
+            <select name="couleur" id="couleur">
+                <option value="">Toutes</option>
+                {% for c in couleur %}
+                    <option value="{{ c.id }}" {{ app.request.get('couleur') == c.id ? 'selected' : '' }}>
+                        {{ c.valeur }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="taille">Taille :</label><br>
+            <select name="taille" id="taille">
+                <option value="">Toutes</option>
+                {% for taille in tailles %}
+                    <option value="{{ taille.id }}" {{ app.request.get('taille') == taille.id ? 'selected' : '' }}>
+                        {{ taille.valeur }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div style="align-self: flex-end;">
+            <button type="submit">Filtrer</button>
+            
+    <a href="{{ path('articles') }}" class="btn-reset">Réinitialiser les filtres</a>
+
+        </div>
+    </form>
 </div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% if articles is not empty %}
+        {% for article in articles %}
+            <div style="border: 1px solid #ccc; padding: 15px; width: 300px;">
+                <a href="{{ path('article_detail', { id: article.id }) }}">
+                    <h2>{{ article.titre }}</h2>
+                </a>
+                <img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}" style="width: 100%; height: auto;">
+                <p><strong>Prix :</strong> {{ article.prix }} €</p>
+
+                <p>Couleurs disponibles :</p>            
+                {% for couleur in article.couleurs %}
+                    <p>{{ couleur.valeur }}</p>               
+                {% endfor %}
+
+                <p>Tailles disponibles :</p>            
+                {% for taille in article.tailles %}
+                    <p>{{ taille.valeur }}</p>
+                {% endfor %}
+
+                <p>{{ article.detail|slice(0, 100) ~ '...' }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p><strong>Aucun article ne correspond à vos critères de recherche.</strong></p>
+    {% endif %}
+</div>
+
+
 {% endblock %}

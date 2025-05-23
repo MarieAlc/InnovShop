@@ -269,27 +269,38 @@ public function addPanier(Panier $panier): static
     return $this;
 }
 
-public function removePanier(Panier $panier): static
-{
-    if ($this->paniers->removeElement($panier)) {
-        // set the owning side to null (unless already changed)
-        if ($panier->getUser() === $this) {
-            $panier->setUser(null);
+    public function removePanier(Panier $panier): static
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getUser() === $this) {
+                $panier->setUser(null);
+            }
         }
+
+        return $this;
     }
 
-    return $this;
-}
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
 
-public function isVerified(): bool
-{
-    return $this->isVerified;
-}
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
-public function setIsVerified(bool $isVerified): static
-{
-    $this->isVerified = $isVerified;
+        return $this;
+    }
+        public function getAdresseComplete(): string
+    {
+        return sprintf('%s %s, %s %s', $this->numero, $this->rue, $this->codePostal, $this->ville);
+    }
 
-    return $this;
-}
+    public function getCommandesIds(): string
+    {
+        return implode(', ', $this->getCommandes()->map(
+        fn($commande) => 'n°' . $commande->getId()
+    )->toArray());
+    }
 }
