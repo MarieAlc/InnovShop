@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container my-5">
+    <h2>Détail de la commande n°{{ commande.id }}</h2>
+    <p>
+        Passée le {{ commande.createdAt|date('d/m/Y à H:i') }}<br>
+        Statut : <strong>{{ commande.status|capitalize }}</strong><br>
+        Adresse de livraison : {{ commande.numero }} {{ commande.rue }}, {{ commande.codePostal }} {{ commande.ville }}
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Article</th>
+                <th>Couleur</th>
+                <th>Taille</th>
+                <th>Prix</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ligne in commande.commandeLignes %}
+                <tr>
+                    <td>
+                        <img src="{{ asset('uploads/articles/' ~ ligne.article.image) }}" alt="{{ ligne.article.titre }}" style="max-width: 80px;">
+                    </td>
+                    <td>{{ ligne.article.titre }}</td>
+                    <td>{{ ligne.couleur }}</td>
+                    <td>{{ ligne.taille }}</td>
+                    <td>{{ ligne.prix|number_format(2, ',', ' ') }} €</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><strong>Total :</strong></td>
+                <td><strong>{{ commande.total|number_format(2, ',', ' ') }} €</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <a href="{{ path('profil_commandes') }}" class="btn btn-secondary mt-3">← Retour à mes commandes</a>
+</div>
+
+{% endblock %}

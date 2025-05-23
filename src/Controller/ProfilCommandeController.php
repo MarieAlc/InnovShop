@@ -24,4 +24,18 @@ final class ProfilCommandeController extends AbstractController
             'commandes' => $commandes,
         ]);
     }
+
+    #[Route('/profil/commande/{id}', name: 'commande_detail')]
+    public function detail(Commande $commande): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+    
+        if ($commande->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException('Cette commande ne vous appartient pas.');
+        }
+
+        return $this->render('profil/commande_detail.html.twig', [
+            'commande' => $commande,
+        ]);
+}
 }

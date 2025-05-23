@@ -24,7 +24,7 @@ final class CommandeController extends AbstractController
 {
     #[Route('/commande/recap', name:'commande_recap')]
     #[IsGranted('ROLE_USER')]
-    public function validerCommande( MailerInterface $mailer, EntityManagerInterface $em, Request $request,SessionInterface $session ): Response{
+    public function validerCommande( MailerInterface $mailer, EntityManagerInterface $em, Request $request): Response{
 
         /** @var User $user */
 
