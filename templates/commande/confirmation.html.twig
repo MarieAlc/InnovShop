@@ -6,7 +6,7 @@
     <h1>Félicitations {{ app.user.prenom }} !</h1>
     <p>Votre commande numéro <strong>#{{ commande.id }}</strong> a bien été enregistrée.</p>
     <p>Un récapitulatif vous a été envoyé par email à <strong>{{ app.user.email }}</strong>.</p>
-    <p>Vous pouvez suivre le statut de votre commande <a href="#">ici</a>.</p>
+    <p>Vous pouvez suivre le statut de votre commande <a href="{{ path('profil_commandes') }}">ici</a>.</p>
 
 
 {% endblock %}

@@ -11,6 +11,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -88,4 +89,32 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_login');
     }
+    #[Route('/resend-verification', name: 'resend_verification')]
+public function resendVerificationEmail(
+    MailerInterface $mailer,
+    EmailVerifier $emailVerifier,
+    UserRepository $userRepository
+): Response {
+    /** @var User $user */
+    $user = $this->getUser();
+
+    if (!$user || $user->isVerified()) {
+        return $this->redirectToRoute('app_login');
+    }
+
+    $emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+        (new TemplatedEmail())
+            ->from(new Address('support@innovshop.com', 'InnovShop-support'))
+            ->to((string) $user->getEmail())
+            ->subject('Confirmation de votre email')
+            ->htmlTemplate('registration/confirmation_email.html.twig')
+    );
+
+    $this->addFlash('success', 'Un nouvel e-mail de confirmation vous a été envoyé.');
+
+    return $this->redirectToRoute('app_login');
+}
+
+
+
 }

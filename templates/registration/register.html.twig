@@ -20,13 +20,23 @@
             {{ form_row(registrationForm.prenom) }}
         </div>
     </div>
-    {{ form_row(registrationForm.email)}}
+    <div class="mb-3">
+    {{ form_label(registrationForm.email) }}
+    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control' ~ (registrationForm.email.vars.errors|length > 0 ? ' is-invalid' : '') }}) }}
+    <div class="invalid-feedback">
+        {{ form_errors(registrationForm.email) }}
+    </div>
+</div>
 
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
 
+<div class="mb-3">
+    {{ form_label(registrationForm.plainPassword, 'Mot de passe') }}
+    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+
+    {% for error in registrationForm.plainPassword.vars.errors %}
+        <div class="text-danger small mt-1">{{ error.message }}</div>
+    {% endfor %}
+</div>
         <button type="submit" class="btn">Inscrivez-Vous</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

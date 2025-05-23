@@ -183,5 +183,15 @@ class Commande
         return sprintf('%s %s, %s %s', $this->numero, $this->rue, $this->codePostal, $this->ville);
     }
 
+    public function getStatusLabel(): string
+    {
+        return match ($this->status) {
+            'en_attente' => 'En attente',
+            'livrée' => 'Livrée',
+            'annulée' => 'Annulée',
+            default => ucfirst($this->status),
+        };
+    }
+
     
 }

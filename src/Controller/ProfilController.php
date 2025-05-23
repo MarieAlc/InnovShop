@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\ChangePasswordForm;
+use App\Form\UpdatePasswordForm;
 use App\Form\ProfilTypeForm;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,10 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ProfilController extends AbstractController
 {
     #[Route('/profil', name: 'profil')]
+    #[IsGranted('ROLE_USER')]
     public function index(): Response
     {
         return $this->render('profil/index.html.twig', [
@@ -24,6 +26,7 @@ final class ProfilController extends AbstractController
     }
 
     #[Route ('/profil/edit', name:'profil_edit')]
+    #[IsGranted('ROLE_USER')]
     public function edit (Request $request, EntityManagerInterface $em): Response{
         /** @var User $user */
         $user = $this->getUser();
@@ -44,10 +47,10 @@ final class ProfilController extends AbstractController
     }
 
     #[Route ('profil/password', name: 'change_password')]
-    public function changePassord( Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $hasher): Response{
+    public function changePassword( Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $hasher): Response{
          /** @var User $user */
         $user = $this->getUser();
-        $form = $this->createForm(ChangePasswordForm::class);
+        $form = $this->createForm(UpdatePasswordForm::class);
         $form->handleRequest($request);
         dump($form->getErrors(true));
 
@@ -71,6 +74,7 @@ final class ProfilController extends AbstractController
     }
 
     #[Route('/profil/delete', name:'delete_profil')]
+    #[IsGranted('ROLE_USER')]
     public function deleteAccount (EntityManagerInterface $em, TokenStorageInterface $tokenStorage, Request $request): Response{
 
        /** @var User $user */
