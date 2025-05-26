@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Controller\Admin;;
+namespace App\Controller\Admin;
+
+;
 
 use App\Entity\Couleurs;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;

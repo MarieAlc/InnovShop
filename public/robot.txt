@@ -1,0 +1,17 @@
+# Autoriser tous les moteurs de recherche
+User-agent: *
+
+# Autoriser tout le site sauf les pages sensibles
+Disallow: /admin
+Disallow: /profil
+Disallow: /panier
+Disallow: /commande
+Disallow: /login
+Disallow: /logout
+Disallow: /register
+
+# Autoriser le reste
+Allow: /
+
+# Indiquer l’emplacement du sitemap (à adapter si besoin)
+# Sitemap: http://localhost:8000

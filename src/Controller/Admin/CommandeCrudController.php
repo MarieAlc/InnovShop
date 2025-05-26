@@ -19,20 +19,20 @@ class CommandeCrudController extends AbstractCrudController
         return Commande::class;
     }
 
-    
+
     public function configureFields(string $pageName): iterable
     {
-      $fields = [];
+        $fields = [];
 
-    if ($pageName === 'index'|| $pageName === 'detail') {
-        $fields[] = IdField::new('id');
-        $fields[] = TextField::new('user.nom', 'Nom');
-        $fields[] = TextField::new('user.prenom', 'Prénom');
-        $fields[] = TextField::new('adresseComplete', 'Adresse de livraison');
-        $fields[] = TextField::new('user.email', 'Mail');
-        $fields[] = TextField::new('articlesList', 'Articles');
-        
-    }
+        if ($pageName === 'index' || $pageName === 'detail') {
+            $fields[] = IdField::new('id');
+            $fields[] = TextField::new('user.nom', 'Nom');
+            $fields[] = TextField::new('user.prenom', 'Prénom');
+            $fields[] = TextField::new('adresseComplete', 'Adresse de livraison');
+            $fields[] = TextField::new('user.email', 'Mail');
+            $fields[] = TextField::new('articlesList', 'Articles');
+
+        }
 
         $fields[] = ChoiceField::new('status')
             ->setChoices([
@@ -50,12 +50,13 @@ class CommandeCrudController extends AbstractCrudController
 
         $fields[] = DateTimeField::new('createdAt')->hideOnForm();
 
-    return $fields;
+        return $fields;
     }
-    public function configureActions(Actions $actions): Actions{
+    public function configureActions(Actions $actions): Actions
+    {
         return $actions
-        ->add ( 'index', Action::DETAIL);
+        ->add('index', Action::DETAIL);
     }
 
-    
+
 }

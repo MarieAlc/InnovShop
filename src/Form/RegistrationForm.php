@@ -32,12 +32,12 @@ class RegistrationForm extends AbstractType
                 ],
             ])
 
-            ->add('nom', TextType::class,[
-                'label'=>'Nom'
+            ->add('nom', TextType::class, [
+                'label' => 'Nom'
             ])
 
-            ->add('prenom', TextType::class,[
-                'label'=>'Prénom'
+            ->add('prenom', TextType::class, [
+                'label' => 'Prénom'
             ])
 
             ->add('plainPassword', PasswordType::class, [

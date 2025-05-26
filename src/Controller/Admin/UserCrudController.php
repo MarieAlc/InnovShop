@@ -18,22 +18,23 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
-   
+
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id'),
             TextField::new('nom'),
             TextField::new('prenom'),
-            TextField::new ('email'),
-            TextField::new ('telephone'),
+            TextField::new('email'),
+            TextField::new('telephone'),
             TextField::new('adresseComplete', 'Adresse de livraison'),
             TextField::new('commandesIds', 'Commandes'),
 
         ];
     }
-    public function configureActions(Actions $actions): Actions{
+    public function configureActions(Actions $actions): Actions
+    {
         return $actions
-        ->add ( 'index', Action::DETAIL);
+        ->add('index', Action::DETAIL);
     }
 }

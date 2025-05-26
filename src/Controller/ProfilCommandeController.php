@@ -15,11 +15,11 @@ final class ProfilCommandeController extends AbstractController
     {
         /** @var User $user  */
 
-    $user= $this->getUser();
-    $commandes = $em->getRepository(Commande::class)->findBy(
-        ['user'=> $user],
-        ['createdAt' => 'DESC']
-    );
+        $user = $this->getUser();
+        $commandes = $em->getRepository(Commande::class)->findBy(
+            ['user' => $user],
+            ['createdAt' => 'DESC']
+        );
         return $this->render('profil/commandes.html.twig', [
             'commandes' => $commandes,
         ]);
@@ -29,7 +29,7 @@ final class ProfilCommandeController extends AbstractController
     public function detail(Commande $commande): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-    
+
         if ($commande->getUser() !== $this->getUser()) {
             throw $this->createAccessDeniedException('Cette commande ne vous appartient pas.');
         }
@@ -37,5 +37,5 @@ final class ProfilCommandeController extends AbstractController
         return $this->render('profil/commande_detail.html.twig', [
             'commande' => $commande,
         ]);
-}
+    }
 }

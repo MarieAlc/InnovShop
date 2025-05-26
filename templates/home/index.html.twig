@@ -3,6 +3,7 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
+<h1> Bienvenue sur InnovShop !</h1>
 <div class="container mt-5">
 
     <!-- Articles à la une -->
@@ -15,7 +16,7 @@
             <img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}"class="card-img-top" style="height: 250px; object-fit: cover;">
                 </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ article.titre }}</h5>
+                        <h3 class="card-title">{{ article.titre }}</h3>
                         <p class="card-text">{{ article.detail|slice(0, 100) ~ '...' }}</p>
                         <a href="{{ path('article_detail', { id: article.id }) }}" class="btn btn-primary">Voir plus</a>
                     </div>
@@ -31,7 +32,7 @@
                 <div class="card mb-3">
                     <img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}"class="card-img-top" style="height: 250px; object-fit: cover;">
                     <div class="card-body">
-                        <h5 class="card-title">{{ article.titre }}</h5>
+                        <h3 class="card-title">{{ article.titre }}</h3>
                         <p class="card-text">{{ article.detail|slice(0, 100) }}...</p>
                         <a href="{{ path('article_detail', { id: article.id }) }}" class="btn btn-secondary">Voir plus</a>
                     </div>

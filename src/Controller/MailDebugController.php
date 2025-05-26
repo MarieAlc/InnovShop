@@ -1,4 +1,5 @@
 <?php
+
 // src/Controller/MailDebugController.php
 
 namespace App\Controller;

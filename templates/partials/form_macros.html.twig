@@ -1,0 +1,15 @@
+{% macro formRow(field) %}
+    <div class="mb-3">
+        {{ form_label(field) }}
+        {{ form_widget(field, {
+            attr: {
+                class: 'form-control' ~ (field.vars.errors|length > 0 ? ' is-invalid' : '')
+            }
+        }) }}
+        {% for error in field.vars.errors %}
+            <div class="invalid-feedback d-block">
+                {{ error.message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}

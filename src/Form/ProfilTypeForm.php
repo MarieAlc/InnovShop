@@ -21,9 +21,9 @@ class ProfilTypeForm extends AbstractType
             ->add('rue')
             ->add('codePostal')
             ->add('ville')
-            ->add('save',SubmitType::class,[
-                'label'=>'Mettre à jour',
-                'attr'=>['class'=>'btn btn-primary mt-3']
+            ->add('save', SubmitType::class, [
+                'label' => 'Mettre à jour',
+                'attr' => ['class' => 'btn btn-primary mt-3']
             ])
         ;
     }

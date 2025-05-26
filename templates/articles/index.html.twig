@@ -4,6 +4,7 @@
 
 {% block body %}
 <h1>Nos articles</h1>
+
 <div class="filtres" style="margin-bottom: 30px; padding: 15px; border: 1px solid #ccc;">
     <form method="get" action="{{ path('articles') }}" style="display: flex; flex-wrap: wrap; gap: 20px;">
         <div>
@@ -45,7 +46,7 @@
         <div style="align-self: flex-end;">
             <button type="submit">Filtrer</button>
             
-    <a href="{{ path('articles') }}" class="btn-reset">Réinitialiser les filtres</a>
+            <a href="{{ path('articles') }}" class="btn-reset">Réinitialiser les filtres</a>
 
         </div>
     </form>

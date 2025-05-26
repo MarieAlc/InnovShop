@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -37,7 +38,7 @@ class ResetPasswordController extends AbstractController
     #[Route('', name: 'app_forgot_password_request')]
     public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator): Response
     {
-        
+
         $form = $this->createForm(ResetPasswordRequestForm::class);
         $form->handleRequest($request);
 
@@ -49,10 +50,10 @@ class ResetPasswordController extends AbstractController
             );
         }
         if ($form->isSubmitted() && !$form->isValid()) {
-        
-        $this->addFlash('error', 'Formulaire invalide, merci de vérifier les champs.');
 
-        return $this->redirectToRoute('app_forgot_password_request');
+            $this->addFlash('error', 'Formulaire invalide, merci de vérifier les champs.');
+
+            return $this->redirectToRoute('app_forgot_password_request');
         }
 
         return $this->render('reset_password/request.html.twig', [
@@ -67,17 +68,17 @@ class ResetPasswordController extends AbstractController
     #[Route('/check-email', name: 'app_check_email')]
     public function checkEmail(): Response
     {
-         $resetToken = $this->getTokenObjectFromSession() ?? $this->resetPasswordHelper->generateFakeResetToken();
-        
+        $resetToken = $this->getTokenObjectFromSession() ?? $this->resetPasswordHelper->generateFakeResetToken();
+
 
         return $this->render('reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
         ]);
     }
 
-     /**
-     * Affiche et traite le formulaire de réinitialisation du mot de passe.
-     */
+    /**
+    * Affiche et traite le formulaire de réinitialisation du mot de passe.
+    */
     #[Route('/reset/{token}', name: 'app_reset_password')]
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, string $token = null): Response
     {
@@ -106,18 +107,20 @@ class ResetPasswordController extends AbstractController
 
         $form = $this->createForm(ChangePasswordForm::class);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->resetPasswordHelper->removeResetRequest($token);
 
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
-            $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));            
+            $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
             $this->entityManager->flush();
 
             $this->cleanSessionAfterReset();
 
-            return $this->redirectToRoute('home');
+            $this->addFlash('success', 'Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter.');
+            return $this->redirectToRoute('app_login');
+
         }
 
         return $this->render('reset_password/reset.html.twig', [
@@ -137,10 +140,10 @@ class ResetPasswordController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('app_check_email');
         }
-        
+
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
-            
+
         } catch (ResetPasswordExceptionInterface $e) {
 
             return $this->redirectToRoute('app_check_email');
@@ -154,10 +157,10 @@ class ResetPasswordController extends AbstractController
             ->context([
                 'resetToken' => $resetToken,
             ]);
-          dump($mailer);
+
         $mailer->send($email);
-        exit;
-        
+
+
         $this->setTokenObjectInSession($resetToken);
 
         return $this->redirectToRoute('app_check_email');

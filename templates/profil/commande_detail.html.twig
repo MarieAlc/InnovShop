@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container my-5">
-    <h2>Détail de la commande n°{{ commande.id }}</h2>
+    <h1>Détail de la commande n°{{ commande.id }}</h1>
     <p>
         Passée le {{ commande.createdAt|date('d/m/Y à H:i') }}<br>
         Statut : <strong>{{ commande.status|capitalize }}</strong><br>

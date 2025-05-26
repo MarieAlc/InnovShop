@@ -6,11 +6,11 @@
 </head>
 <body style="font-family: Arial, sans-serif;">
 
-    <h2>Bonjour {{ user.prenom }},</h2>
+    <h1>Bonjour {{ user.prenom }},</h1>
 
     <p>Merci pour votre commande sur <strong>InnovShop</strong> !</p>
 
-    <h3>Détails de votre commande :</h3>
+    <h2>Détails de votre commande :</h2>
 
     <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
         <thead>
@@ -40,7 +40,7 @@
         </tbody>
     </table>
 
-    <h4 style="text-align: right; margin-top: 20px;">Total : <strong>{{ commande.total|number_format(2, ',', ' ') }} €</strong></h4>
+    <h3 style="text-align: right; margin-top: 20px;">Total : <strong>{{ commande.total|number_format(2, ',', ' ') }} €</strong></h3>
 
     <p>Nous vous tiendrons informé de l’expédition. N'hésitez pas à nous contacter si vous avez la moindre question.</p>
 

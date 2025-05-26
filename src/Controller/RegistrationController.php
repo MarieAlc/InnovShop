@@ -42,7 +42,9 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('support@innovshop.com', 'InnovShop-support'))
                     ->to((string) $user->getEmail())
@@ -90,30 +92,32 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_login');
     }
     #[Route('/resend-verification', name: 'resend_verification')]
-public function resendVerificationEmail(
-    MailerInterface $mailer,
-    EmailVerifier $emailVerifier,
-    UserRepository $userRepository
-): Response {
-    /** @var User $user */
-    $user = $this->getUser();
+    public function resendVerificationEmail(
+        MailerInterface $mailer,
+        EmailVerifier $emailVerifier,
+        UserRepository $userRepository
+    ): Response {
+        /** @var User $user */
+        $user = $this->getUser();
 
-    if (!$user || $user->isVerified()) {
+        if (!$user || $user->isVerified()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $emailVerifier->sendEmailConfirmation(
+            'app_verify_email',
+            $user,
+            (new TemplatedEmail())
+                ->from(new Address('support@innovshop.com', 'InnovShop-support'))
+                ->to((string) $user->getEmail())
+                ->subject('Confirmation de votre email')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+        );
+
+        $this->addFlash('success', 'Un nouvel e-mail de confirmation vous a été envoyé.');
+
         return $this->redirectToRoute('app_login');
     }
-
-    $emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-        (new TemplatedEmail())
-            ->from(new Address('support@innovshop.com', 'InnovShop-support'))
-            ->to((string) $user->getEmail())
-            ->subject('Confirmation de votre email')
-            ->htmlTemplate('registration/confirmation_email.html.twig')
-    );
-
-    $this->addFlash('success', 'Un nouvel e-mail de confirmation vous a été envoyé.');
-
-    return $this->redirectToRoute('app_login');
-}
 
 
 

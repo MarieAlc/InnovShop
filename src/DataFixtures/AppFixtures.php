@@ -37,13 +37,13 @@ class AppFixtures extends Fixture
             $couleurs[] = $couleur;
         }
 
-        
+
         for ($i = 0; $i < 10; $i++) {
             $article = new Articles();
 
             $titre = ucfirst($faker->randomElement($categories) . ' ' . $faker->randomElement($styles));
 
-        
+
             $article
                 ->setTitre($titre)
                 ->setDetail($faker->paragraph(3))
@@ -55,16 +55,16 @@ class AppFixtures extends Fixture
                 $article->addTaille($taille);
             }
 
-                $couleur1 = $faker->randomElement($couleurs);
-                $couleur2 = $faker->randomElement($couleurs);
-                $article->addCouleur($couleur1);
+            $couleur1 = $faker->randomElement($couleurs);
+            $couleur2 = $faker->randomElement($couleurs);
+            $article->addCouleur($couleur1);
 
-                if ($couleur2 !== $couleur1) {
-                    $article->addCouleur($couleur2);
-                }
+            if ($couleur2 !== $couleur1) {
+                $article->addCouleur($couleur2);
+            }
 
 
-        
+
             $manager->persist($article);
 
         }

@@ -109,7 +109,7 @@ class Tailles
     }
 
     public function __toString(): string
-{
-    return $this->valeur; 
-}
+    {
+        return $this->valeur;
+    }
 }

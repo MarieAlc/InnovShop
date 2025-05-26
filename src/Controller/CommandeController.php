@@ -24,7 +24,8 @@ final class CommandeController extends AbstractController
 {
     #[Route('/commande/recap', name:'commande_recap')]
     #[IsGranted('ROLE_USER')]
-    public function validerCommande( MailerInterface $mailer, EntityManagerInterface $em, Request $request): Response{
+    public function validerCommande(MailerInterface $mailer, EntityManagerInterface $em, Request $request): Response
+    {
 
         /** @var User $user */
 
@@ -33,13 +34,13 @@ final class CommandeController extends AbstractController
 
         $commande = new Commande();
 
-        $form = $this->createForm(AdresseLivraisonTypeForm::class, $commande); 
+        $form = $this->createForm(AdresseLivraisonTypeForm::class, $commande);
         $form->handleRequest($request);
-        
+
         $total = 0;
         foreach ($panier as $ligne) {
             $total += $ligne->getArticle()->getPrix();
-            
+
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,8 +66,8 @@ final class CommandeController extends AbstractController
             $em->flush();
             $em->refresh($commande);
 
-            $commande = $em->getRepository(Commande::class)->find($commande->getId());    
-            
+            $commande = $em->getRepository(Commande::class)->find($commande->getId());
+
 
 
             $email = (new Email())
@@ -80,12 +81,12 @@ final class CommandeController extends AbstractController
 
             $mailer->send($email);
 
-            $this->addFlash('success','Commande envoyé');
-            return $this->redirectToRoute('commande_confirmation',[
-                'id'=> $commande->getId(),
+            $this->addFlash('success', 'Commande envoyé');
+            return $this->redirectToRoute('commande_confirmation', [
+                'id' => $commande->getId(),
             ]);
         }
-        
+
         return $this->render('commande/recap.html.twig', [
             'panier' => $panier,
             'total' => $total,
@@ -93,13 +94,14 @@ final class CommandeController extends AbstractController
         ]);
     }
 
-    #[Route ('/commande/confirmation/{id}', name:'commande_confirmation')]
+    #[Route('/commande/confirmation/{id}', name:'commande_confirmation')]
     #[IsGranted('ROLE_USER')]
-    public function confirmation(Commande $commande): Response{
-        
-        return $this->render('commande/confirmation.html.twig',[
-            'commande'=>$commande
+    public function confirmation(Commande $commande): Response
+    {
+
+        return $this->render('commande/confirmation.html.twig', [
+            'commande' => $commande
         ]);
     }
-    
+
 }

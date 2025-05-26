@@ -15,13 +15,13 @@ class AdresseLivraisonTypeForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('numero',TextType::class,['label' => ' N°'])
+            ->add('numero', TextType::class, ['label' => ' N°'])
             ->add('rue', TextType::class, ['label' => 'Rue /Avenue ...'])
-            ->add('codePostal',TextType::class, ['label' => 'Code Postal'])
-            ->add('ville', TextType::class, ['label'=>'Ville'])
-            
-            
-            ;
+            ->add('codePostal', TextType::class, ['label' => 'Code Postal'])
+            ->add('ville', TextType::class, ['label' => 'Ville'])
+
+
+        ;
 
     }
 

@@ -18,25 +18,27 @@ class UpdatePasswordForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('currentPassword',PasswordType::class,[
-                'label'=> 'Ancien mot de passe',
-                'mapped'=> false,
-                'constraints'=>[
-                    new NotBlank(['message'=>'Veuillez entrer votre mot de passe actuel. ']),
+            ->add('currentPassword', PasswordType::class, [
+                'invalid_message' => 'Le mot de passe actuel est incorrect.',
+                'label' => 'Ancien mot de passe',
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez entrer votre mot de passe actuel. ']),
+
                 ],
             ])
-            ->add('newPassword', RepeatedType::class,[
+            ->add('newPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'mapped'=> false,
-                'invalid_message'=> 'Les mots de passe ne correspondent pas.',
+                'mapped' => false,
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
                 'required' => true,
-                'first_options'=>['label'=>'Nouveau mot de passe'],
-                'second_options'=>['label' => 'Confirmer le mot de passe'],
-                'constraints'=> [
-                    new NotBlank(['message'=>'Veuillez entrer un nouveau mot de passe']),
+                'first_options' => ['label' => 'Nouveau mot de passe'],
+                'second_options' => ['label' => 'Confirmer le mot de passe'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez entrer un nouveau mot de passe']),
                     new Length([
-                        'min'=> 6,
-                        'minMessage'=> 'Le mot de passe doit contenir au moins {{ limit }} caractères.'
+                        'min' => 6,
+                        'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères.'
                     ]),
                     new Regex([
                     'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
@@ -45,12 +47,12 @@ class UpdatePasswordForm extends AbstractType
                 ],
 
             ])
-            ->add('submit', SubmitType::class,[
-                'label'=> 'Changer mon mot de passe'
+            ->add('submit', SubmitType::class, [
+                'label' => 'Changer mon mot de passe'
             ]);
 
-           
-        
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

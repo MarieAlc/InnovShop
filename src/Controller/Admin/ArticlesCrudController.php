@@ -11,8 +11,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-
-
 class ArticlesCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
@@ -26,11 +24,11 @@ class ArticlesCrudController extends AbstractCrudController
         return [
             TextField::new('titre'),
             TextField::new('detail'),
-            Textfield::new ('specification'),
+            Textfield::new('specification'),
             ImageField::new('image')
-                ->setBasePath('uploads/articles')    
-                ->setUploadDir('public/uploads/articles') 
-                ->setUploadedFileNamePattern('[randomhash].[extension]') 
+                ->setBasePath('uploads/articles')
+                ->setUploadDir('public/uploads/articles')
+                ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
             BooleanField::new('aLaUne', 'Mettre à la une'),
 
@@ -39,7 +37,7 @@ class ArticlesCrudController extends AbstractCrudController
                 'by_reference' => false,
             ])
             ->setHelp('Sélectionne une ou plusieurs couleurs pour cet article'),
-            
+
             AssociationField::new('tailles')
             ->setFormTypeOptions([
                 'by_reference' => false,
@@ -48,9 +46,9 @@ class ArticlesCrudController extends AbstractCrudController
 
              AssociationField::new('type')
             ->setHelp('Sélectionne le type pour cet article'),
-            
+
             ];
-            
+
     }
-    
+
 }

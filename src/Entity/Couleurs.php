@@ -6,7 +6,7 @@ use App\Repository\CouleursRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use app\Entity\Articles;
+use App\Entity\Articles;
 
 #[ORM\Entity(repositoryClass: CouleursRepository::class)]
 class Couleurs
@@ -108,8 +108,8 @@ class Couleurs
         return $this;
     }
 
-     public function __toString(): string
+    public function __toString(): string
     {
-        return $this->valeur; 
+        return $this->valeur;
     }
 }

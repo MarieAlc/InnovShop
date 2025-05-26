@@ -3,10 +3,13 @@
 {% block title %}Définir un nouveau mot de passe{% endblock %}
 
 {% block body %}
-    <h1>Changer mon mot de passe</h1>
+{% import 'partials/form_macros.html.twig' as formMacros %}
+<h1>Changer mon mot de passe</h1>
+
 {{ form_start(resetForm) }}
-    {{ form_row(resetForm.plainPassword) }}
-    <button type="submit">Modifier mon mot de passe</button>
+    {{ form_row(resetForm.plainPassword.first) }}
+    {{ form_row(resetForm.plainPassword.second) }}
+    {{ form_row(resetForm.submit) }}
 {{ form_end(resetForm) }}
 
 {% endblock %}

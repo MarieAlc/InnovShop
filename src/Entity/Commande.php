@@ -91,42 +91,54 @@ class Commande
         return $this;
     }
 
-   public function getNumero(): ?string {
+    public function getNumero(): ?string
+    {
 
-         return $this->numero;
+        return $this->numero;
     }
-    public function setNumero(?string $numero): static {
+    public function setNumero(?string $numero): static
+    {
 
-         $this->numero = $numero; return $this; 
-    }
-
-    public function getRue(): ?string {
-        
-        return $this->rue; 
-    }
-    public function setRue(?string $rue): static { 
-        
-        $this->rue = $rue; return $this; 
+        $this->numero = $numero;
+        return $this;
     }
 
-    public function getCodePostal(): ?string { 
+    public function getRue(): ?string
+    {
 
-        return $this->codePostal; 
+        return $this->rue;
     }
-    public function setCodePostal(?string $codePostal): static {
-        
-        $this->codePostal = $codePostal; return $this; 
+    public function setRue(?string $rue): static
+    {
+
+        $this->rue = $rue;
+        return $this;
     }
 
-    public function getVille(): ?string { 
-        
-        return $this->ville; 
+    public function getCodePostal(): ?string
+    {
+
+        return $this->codePostal;
     }
-    public function setVille(?string $ville): static { 
-        
-        $this->ville = $ville; return $this; 
+    public function setCodePostal(?string $codePostal): static
+    {
+
+        $this->codePostal = $codePostal;
+        return $this;
     }
-    
+
+    public function getVille(): ?string
+    {
+
+        return $this->ville;
+    }
+    public function setVille(?string $ville): static
+    {
+
+        $this->ville = $ville;
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -193,5 +205,5 @@ class Commande
         };
     }
 
-    
+
 }

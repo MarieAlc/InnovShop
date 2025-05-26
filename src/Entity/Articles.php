@@ -221,11 +221,12 @@ class Articles
     {
         return $this->paniers;
     }
-    public function addPanier(Panier $panier): static{
-    if (!$this->paniers->contains($panier)) {
-        $this->paniers[] = $panier;
-        $panier->setArticle($this);
-    }
+    public function addPanier(Panier $panier): static
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->setArticle($this);
+        }
 
         return $this;
     }
@@ -233,7 +234,7 @@ class Articles
     public function removePanier(Panier $panier): static
     {
         if ($this->paniers->removeElement($panier)) {
-           
+
             if ($panier->getArticle() === $this) {
                 $panier->setArticle(null);
             }
@@ -284,4 +285,3 @@ class Articles
         return $this;
     }
 }
-

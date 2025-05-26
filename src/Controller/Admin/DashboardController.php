@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\Admin;
 
 use App\Entity\Articles;
@@ -16,13 +17,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-
 #[IsGranted('ROLE_ADMIN')]
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
-    {     
+    {
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
 
         return $this->redirect($adminUrlGenerator
@@ -37,27 +37,28 @@ class DashboardController extends AbstractDashboardController
             ->setTitle('Dev');
     }
 
-   public function configureMenuItems(): iterable {
-    yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+    public function configureMenuItems(): iterable
+    {
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
-    yield MenuItem::section('Gestion du catalogue');
-    yield MenuItem::linkToCrud('Articles', 'fas fa-box', Articles::class);
+        yield MenuItem::section('Gestion du catalogue');
+        yield MenuItem::linkToCrud('Articles', 'fas fa-box', Articles::class);
 
-    yield MenuItem::section('Gestion couleurs, type et tailles');
-    yield MenuItem::linkToCrud('Couleurs', 'fa fa-palette', Couleurs::class);
-    yield MenuItem::linkToCrud('Tailles', 'fa fa-ruler', Tailles::class);
-    yield MenuItem::linkToCrud('Types', 'fa fa-tags', Types::class);
+        yield MenuItem::section('Gestion couleurs, type et tailles');
+        yield MenuItem::linkToCrud('Couleurs', 'fa fa-palette', Couleurs::class);
+        yield MenuItem::linkToCrud('Tailles', 'fa fa-ruler', Tailles::class);
+        yield MenuItem::linkToCrud('Types', 'fa fa-tags', Types::class);
 
-    yield MenuItem::section('Commandes');
-    yield MenuItem::linkToCrud('Commandes', 'fas fa-shopping-cart', Commande::class);
+        yield MenuItem::section('Commandes');
+        yield MenuItem::linkToCrud('Commandes', 'fas fa-shopping-cart', Commande::class);
 
-    yield MenuItem::section('Utilisateurs');
-    yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
+        yield MenuItem::section('Utilisateurs');
+        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
 
 
-    yield MenuItem::section('Retour au site');
-    yield MenuItem::linkToUrl('Page d’accueil', 'fas fa-home', '/');
-}
+        yield MenuItem::section('Retour au site');
+        yield MenuItem::linkToUrl('Page d’accueil', 'fas fa-home', '/');
+    }
 
 
 }
