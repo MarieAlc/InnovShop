@@ -48,6 +48,7 @@ class Commande
     public function __construct()
     {
         $this->commandeLignes = new ArrayCollection();
+        $this->status = 'en attente';
     }
 
     public function getId(): ?int

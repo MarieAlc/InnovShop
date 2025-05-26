@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -28,10 +29,13 @@ class UserCrudController extends AbstractCrudController
             TextField::new('email'),
             TextField::new('telephone'),
             TextField::new('adresseComplete', 'Adresse de livraison'),
-            TextField::new('commandesIds', 'Commandes'),
-
         ];
+        if ($pageName === 'detail') {
+        TextField::new('commandesIds', 'Commandes');
+            
+        }
     }
+
     public function configureActions(Actions $actions): Actions
     {
         return $actions

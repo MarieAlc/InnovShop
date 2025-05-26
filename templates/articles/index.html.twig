@@ -3,81 +3,80 @@
 {% block title %}Articles!{% endblock %}
 
 {% block body %}
-<h1>Nos articles</h1>
+<section class="container">
+  <h1 class="page-title">Nos articles</h1>
 
-<div class="filtres" style="margin-bottom: 30px; padding: 15px; border: 1px solid #ccc;">
-    <form method="get" action="{{ path('articles') }}" style="display: flex; flex-wrap: wrap; gap: 20px;">
-        <div>
-            <label for="type">Type :</label><br>
-            <select name="type" id="type">
+    <div class="filtres" id="filtrePanel">
+        <form method="get" action="{{ path('articles') }}" class="filtre-form">
+            <div class="filtre-group">
+                <label for="type">Type :</label>
+                <select name="type" id="type">
                 <option value="">Tous</option>
                 {% for type in types %}
                     <option value="{{ type.id }}" {{ app.request.get('type') == type.id ? 'selected' : '' }}>
-                        {{ type.valeur }}
+                    {{ type.valeur }}
                     </option>
                 {% endfor %}
-            </select>
-        </div>
+                </select>
 
-        <div>
-            <label for="couleur">Couleur :</label><br>
-            <select name="couleur" id="couleur">
+                <label for="couleur">Couleur :</label>
+                <select name="couleur" id="couleur">
                 <option value="">Toutes</option>
                 {% for c in couleur %}
                     <option value="{{ c.id }}" {{ app.request.get('couleur') == c.id ? 'selected' : '' }}>
-                        {{ c.valeur }}
+                    {{ c.valeur }}
                     </option>
                 {% endfor %}
-            </select>
-        </div>
+                </select>
 
-        <div>
-            <label for="taille">Taille :</label><br>
-            <select name="taille" id="taille">
+                <label for="taille">Taille :</label>
+                <select name="taille" id="taille">
                 <option value="">Toutes</option>
                 {% for taille in tailles %}
                     <option value="{{ taille.id }}" {{ app.request.get('taille') == taille.id ? 'selected' : '' }}>
-                        {{ taille.valeur }}
+                    {{ taille.valeur }}
                     </option>
                 {% endfor %}
-            </select>
-        </div>
+                </select>
 
-        <div style="align-self: flex-end;">
-            <button type="submit">Filtrer</button>
-            
-            <a href="{{ path('articles') }}" class="btn-reset">Réinitialiser les filtres</a>
-
-        </div>
-    </form>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    {% if articles is not empty %}
-        {% for article in articles %}
-            <div style="border: 1px solid #ccc; padding: 15px; width: 300px;">
-                <a href="{{ path('article_detail', { id: article.id }) }}">
-                    <h2>{{ article.titre }}</h2>
-                </a>
-                <img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}" style="width: 100%; height: auto;">
-                <p><strong>Prix :</strong> {{ article.prix }} €</p>
-
-                <p>Couleurs disponibles :</p>            
-                {% for couleur in article.couleurs %}
-                    <p>{{ couleur.valeur }}</p>               
-                {% endfor %}
-
-                <p>Tailles disponibles :</p>            
-                {% for taille in article.tailles %}
-                    <p>{{ taille.valeur }}</p>
-                {% endfor %}
-
-                <p>{{ article.detail|slice(0, 100) ~ '...' }}</p>
+                <button type="submit" class="btn">Filtrer</button>
+                <a href="{{ path('articles') }}" class="btn btn-secondary">Réinitialiser</a>
             </div>
-        {% endfor %}
+        </form>
+    </div>
+
+  <div class="articles-grid">
+    {% if articles is not empty %}
+      {% for article in articles %}
+        <div class="article-card">
+          <a href="{{ path('article_detail', { id: article.id }) }}" class="article-link">
+            <img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+            <h2 class="article-title">{{ article.titre }}</h2>
+          </a>
+
+          <p class="article-price"><strong>Prix :</strong> {{ article.prix }} €</p>
+
+          <div class="article-infos">
+            <p><strong>Tailles disponibles :</strong> 
+                {% for taille in article.tailles %}
+                    {{ taille.valeur }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+                </p>
+                <p><strong>Couleurs : </strong>
+                {% for couleur in article.couleurs %}
+                    {{ couleur.valeur }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+                </p>
+          </div>
+
+          <p class="article-description"><strong>Description :</strong> 
+            {{ article.detail|slice(0, 100) ~ '...' }}
+          </p>
+        </div>
+      {% endfor %}
     {% else %}
-        <p><strong>Aucun article ne correspond à vos critères de recherche.</strong></p>
+      <p class="no-result">Aucun article ne correspond à vos critères de recherche.</p>
     {% endif %}
-</div>
-
-
+  </div>
+</section>
 {% endblock %}

@@ -3,43 +3,28 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-<h1> Bienvenue sur InnovShop !</h1>
-<div class="container mt-5">
+<h1>Bienvenue sur InnovShop !</h1>
 
-    <!-- Articles à la une -->
-    <h2 class="mb-4">📰 Articles à la une</h2>
-    <div class="row">
-        {% for article in aLaUne %}
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    
-            <img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}"class="card-img-top" style="height: 250px; object-fit: cover;">
-                </div>
-                    <div class="card-body">
-                        <h3 class="card-title">{{ article.titre }}</h3>
-                        <p class="card-text">{{ article.detail|slice(0, 100) ~ '...' }}</p>
-                        <a href="{{ path('article_detail', { id: article.id }) }}" class="btn btn-primary">Voir plus</a>
-                    </div>
+<div class="homepage-container">
+  {% for sectionTitle, articles in {
+    '📰 Articles à la une': aLaUne,
+    '🆕 Nouveautés': derniersArticles
+  } %}
+    <section class="section">
+      <h2>{{ sectionTitle }}</h2>
+      <div class="articles-grid">
+        {% for article in articles %}
+          <div class="article-card">
+            <img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+            <div class="article-info">
+              <h3>{{ article.titre }}</h3>
+              <p>{{ article.detail|slice(0, 100) ~ '...' }}</p>
+              <a href="{{ path('article_detail', { id: article.id }) }}" class="btn">Voir plus</a>
             </div>
+          </div>
         {% endfor %}
-    </div>
-
-    <!-- Derniers articles ajoutés -->
-    <h2 class="mt-5 mb-4">🆕 Derniers articles ajoutés</h2>
-    <div class="row">
-        {% for article in derniersArticles %}
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <img src="{{ asset('uploads/articles/' ~ article.image) }}" alt="{{ article.titre }}"class="card-img-top" style="height: 250px; object-fit: cover;">
-                    <div class="card-body">
-                        <h3 class="card-title">{{ article.titre }}</h3>
-                        <p class="card-text">{{ article.detail|slice(0, 100) }}...</p>
-                        <a href="{{ path('article_detail', { id: article.id }) }}" class="btn btn-secondary">Voir plus</a>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
+      </div>
+    </section>
+  {% endfor %}
 </div>
 {% endblock %}
