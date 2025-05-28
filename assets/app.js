@@ -7,5 +7,15 @@
  */
 import './styles/app.css';
 
+document.addEventListener("DOMContentLoaded", () => {
+  const burger = document.querySelector(".burger");
+  const navCollapse = document.querySelector(".navbar-collapse");
+
+  if (burger && navCollapse) {
+    burger.addEventListener("click", () => {
+      navCollapse.classList.toggle("open");
+    });
+  }
+});
 
 

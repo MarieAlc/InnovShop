@@ -16,7 +16,7 @@ class CommandeLigne
     #[ORM\ManyToOne(inversedBy: 'commandeLignes', cascade:['persist'])]
     private ?Commande $commande = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commandeLignes')]
+    #[ORM\ManyToOne(inversedBy: 'commandeLignes',fetch: 'EAGER')]
     private ?Articles $article = null;
 
     #[ORM\Column(length: 255)]

@@ -1,36 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion !{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
+    <section class="form">
+        <h1 class="form-title">Connectez-vous</h1>
 
-    <h1 class="h3 mb-3 font-weight-normal">Connectez-Vous</h1>
-    <form method="post">
         {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        {% if app.user %}
-            <div class="mb-3">
-                Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Deconnexion</a>
+            <div class="alert alert-danger">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
             </div>
         {% endif %}
 
-        <label for="username">Email</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-        <label for="password">Mot de passe</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+        {% if app.user %}
+            <div class="alert alert-success">
+                Vous êtes connecté en tant que {{ app.user.userIdentifier }},
+                <a href="{{ path('app_logout') }}">Déconnexion</a>
+            </div>
+        {% endif %}
 
+        <form method="post">
+            <div class="form-group">
+                <label for="inputEmail">Adresse mail</label>
+                <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" required autofocus>
+            </div>
 
-        <button class="btn btn-lg btn-primary" type="submit">
-            Se connecter
-        </button>
-    </form>
-        <p>
-            <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
-        </p>
-        <p>
-            <a href="{{ path('app_register') }}">Créer un compte</a>
-        </p>
+            <div class="form-group">
+                <label for="inputPassword">Mot de passe</label>
+                <input type="password" name="_password" id="inputPassword" required>
+            </div>
+
+            <input type="hidden" name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+            >
+
+            <button class="btn" type="submit">Connexion</button>
+        </form>
+
+        <div class="connexion-link">
+            <p>Pas encore de compte ? <a href="{{ path('app_register') }}">Créer un compte</a></p>
+            <p> <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a></p>
+        </div>
+    </section>
 {% endblock %}

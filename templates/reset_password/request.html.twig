@@ -3,11 +3,14 @@
 {% block title %}Réinitialisation du mot de passe{% endblock %}
 
 {% block body %}
+<section class="form">
     <h1>Réinitialiser mon mot de passe</h1>
 
    {{ form_start(requestForm, { attr: { target: '_self' } }) }}
-
+    <div class="form-group">
         {{ form_row(requestForm.email) }}
+    </div>
         <button class="btn">Envoyer le lien de réinitialisation</button>
     {{ form_end(requestForm) }}
+</section>
 {% endblock %}

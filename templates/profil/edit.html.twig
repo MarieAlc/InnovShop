@@ -3,28 +3,49 @@
 {% block title %}Modifier mon profil{% endblock %}
 
 {% block body %}
-<div class="container my-5">
-    <h1 class="mb-4">Modifier mon profil</h1>
+<div class="container">
+    <div class="form">
+        <h1 class="form-title">Modifier mon profil</h1>
 
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}">{{ message }}</div>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-message {{ label }}">{{ message }}</div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
 
-    {{ form_start(form) }}
-        <div class="row">
-            <div class="col-md-6">{{ form_row(form.nom) }}</div>
-            <div class="col-md-6">{{ form_row(form.prenom) }}</div>
-            <div class="col-md-6">{{ form_row(form.email) }}</div>
-            <div class="col-md-6">{{ form_row(form.telephone) }}</div>
-            <h3> Adresse </h3>
-            <div class="col-md-6">{{ form_row(form.numero) }}</div>
-            <div class="col-md-6">{{ form_row(form.rue) }}</div>
-            <div class="col-md-6">{{ form_row(form.codePostal) }}</div>
-            <div class="col-md-6">{{ form_row(form.ville) }}</div>
-        </div>
-        <div class="mt-4">{{ form_row(form.save) }}</div>
-    {{ form_end(form) }}
+        {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_row(form.nom) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.prenom) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.email) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.telephone) }}
+            </div>
+
+            <h2>Adresse</h2>
+
+            <div class="form-group">
+                {{ form_row(form.numero) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.rue) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.codePostal) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.ville) }}
+            </div>
+
+            <div class="form-group" style="text-align: center;">
+                {{ form_row(form.save) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
 </div>
 {% endblock %}

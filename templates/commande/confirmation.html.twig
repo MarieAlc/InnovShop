@@ -3,10 +3,17 @@
 {% block title %}Confirmation de commande{% endblock %}
 
 {% block body %}
-    <h1>Félicitations {{ app.user.prenom }} !</h1>
-    <p>Votre commande numéro <strong>#{{ commande.id }}</strong> a bien été enregistrée.</p>
-    <p>Un récapitulatif vous a été envoyé par email à <strong>{{ app.user.email }}</strong>.</p>
-    <p>Vous pouvez suivre le statut de votre commande <a href="{{ path('profil_commandes') }}">ici</a>.</p>
-
-
+<div class="confirmation-container">
+    <h1 class="confirmation-title">Félicitations {{ app.user.prenom }} !</h1>
+    <p class="confirmation-text">
+        Votre commande numéro <strong>#{{ commande.id }}</strong> a bien été enregistrée.
+    </p>
+    <p class="confirmation-text">
+        Un récapitulatif vous a été envoyé par email à <strong>{{ app.user.email }}</strong>.
+    </p>
+    <p class="confirmation-text">
+        Vous pouvez suivre le statut de votre commande 
+        <a href="{{ path('profil_commandes') }}" class="confirmation-link">ici</a>.
+    </p>
+</div>
 {% endblock %}

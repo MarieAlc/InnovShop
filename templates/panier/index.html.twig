@@ -1,31 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Panier{% endblock %}
+
 {% block body %}
+<div class="panier-container">
+    <h1 class="panier-title">Mon panier</h1>
 
-<h1>Mon panier</h1>
-
-{% if panier is empty %}
-    <p>Votre panier est vide.</p>
-{% else %}
-<ul>
-    {% for ligne in panier %}
-        <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-            <img src="{{ asset('uploads/articles/' ~ ligne.article.image) }}" alt="Image de l'article" style="width: 50px; height: auto; object-fit: cover;">
-            <div>
-                {{ ligne.article.titre }} - 
-                {{ ligne.taille ? ligne.taille.valeur : 'Taille non définie' }} /
-                {{ ligne.couleur ? ligne.couleur.valeur : 'Couleur non définie' }} :
-                {{ ligne.article.prix }} €
-            </div>
-                <a href="{{ path('panier_supprimer', {'id': ligne.id}) }}"
+    {% if panier is empty %}
+        <p class="panier-vide">Votre panier est vide.</p>
+    {% else %}
+        <ul class="panier-liste">
+            {% for ligne in panier %}
+                <li class="panier-item">
+                    <img src="{{ asset('uploads/articles/' ~ ligne.article.image) }}"
+                         alt="Image de l'article"
+                         class="panier-image">
+                    <div class="panier-details">
+                        {{ ligne.article.titre }} -
+                        {{ ligne.taille ? ligne.taille.valeur : 'Taille non définie' }} /
+                        {{ ligne.couleur ? ligne.couleur.valeur : 'Couleur non définie' }} :
+                        {{ ligne.article.prix }} €
+                    </div>
+                    <a href="{{ path('panier_supprimer', {'id': ligne.id}) }}"
+                       class="panier-supprimer"
                        onclick="return confirm('Supprimer cette ligne ?')">🗑 Supprimer</a>
-        </li>
-    {% endfor %}
-</ul>
-<p><strong>Total :</strong> {{ total }} €</p>
+                </li>
+            {% endfor %}
+        </ul>
 
-    <a href="{{ path('commande_recap') }}">Passez votre commande</a>
-{% endif %}
+        <p class="panier-total"><strong>Total :</strong> {{ total }} €</p>
 
+        <a href="{{ path('commande_recap') }}" class="panier-btn">Passez votre commande</a>
+    {% endif %}
+</div>
 {% endblock %}

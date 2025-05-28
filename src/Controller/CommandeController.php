@@ -36,6 +36,7 @@ final class CommandeController extends AbstractController
 
         $form = $this->createForm(AdresseLivraisonTypeForm::class, $commande);
         $form->handleRequest($request);
+        
 
         $total = 0;
         foreach ($panier as $ligne) {
@@ -71,7 +72,7 @@ final class CommandeController extends AbstractController
 
 
             $email = (new Email())
-                ->from('contact@innovshop.fr')
+                ->from('contact@louanges.website')
                 ->to($user->getEmail())
                 ->subject('Confirmation de votre commande')
                 ->html($this->renderView('emails/confirmation.html.twig', [

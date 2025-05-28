@@ -15,6 +15,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 
 class ArticlesCrudController extends AbstractCrudController
 {
@@ -39,22 +41,36 @@ class ArticlesCrudController extends AbstractCrudController
             BooleanField::new('aLaUne', 'Mettre à la une'),
 
             AssociationField::new('couleurs')
-            ->setFormTypeOptions([
-                'by_reference' => false,
-            ])
+                ->setFormTypeOption('choice_label', 'valeur')
+                ->setFormTypeOptions([
+                    'by_reference' => false,])
+                ->formatValue(function ($value, $entity) {
+                    return implode(', ', $entity->getCouleurs()->map(fn($c) => $c->getValeur())->toArray());
+            })
+            
             ->setHelp('Sélectionne une ou plusieurs couleurs pour cet article'),
 
             AssociationField::new('tailles')
-            ->setFormTypeOptions([
-                'by_reference' => false,
+                ->setFormTypeOption('choice_label', 'valeur')
+                ->setFormTypeOptions([
+                    'by_reference' => false,
                 ])
-                ->setHelp('Sélectionne les tailles disponibles pour cet article'),
+                ->setHelp('Sélectionne les tailles disponibles pour cet article')
+                ->formatValue(function ($value, $entity) {
+                    return implode(', ', $entity->getTailles()->map(fn($t) => $t->getValeur())->toArray());
+                }),
 
-             AssociationField::new('type')
-            ->setHelp('Sélectionne le type pour cet article'),
+             AssociationField::new('type')                
+                ->setHelp('Sélectionne le type pour cet article')
+            
 
             ];
 
+    }
+      public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+        ->add('index', Action::DETAIL);
     }
       public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {

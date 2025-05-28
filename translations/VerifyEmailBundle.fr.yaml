@@ -1,0 +1,7 @@
+verify_email.expire.at:
+    hour: "1 heure"
+    hours: "%count% heures"
+    day: "1 jour"
+    days: "%count% jours"
+    minute: "1 minute"
+    minutes: "%count% minutes"

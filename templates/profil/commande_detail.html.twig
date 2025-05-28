@@ -1,13 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container my-5">
-    <h1>Détail de la commande n°{{ commande.id }}</h1>
-    <p>
-        Passée le {{ commande.createdAt|date('d/m/Y à H:i') }}<br>
-        Statut : <strong>{{ commande.status|capitalize }}</strong><br>
-        Adresse de livraison : {{ commande.numero }} {{ commande.rue }}, {{ commande.codePostal }} {{ commande.ville }}
-    </p>
+<div class="custom-container">
+    <h1 class="commande-titre">Détail de la commande n°{{ commande.id }}</h1>
+
+<div class="commande-infos">
+    <div>
+        <strong>Passée le :</strong> {{ commande.createdAt|date('d/m/Y à H:i') }}
+    </div>
+    <div>
+        <strong>Statut :</strong>
+        <span class="badge badge-{{ commande.status }}">
+            {{ commande.statusLabel }}
+        </span>
+    </div>
+    <div>
+        <strong>Adresse de livraison :</strong><br>
+        {{ commande.numero }} {{ commande.rue }}<br>
+        {{ commande.codePostal }} {{ commande.ville }}
+    </div>
+</div>
 
     <table class="table">
         <thead>

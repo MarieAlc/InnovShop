@@ -3,25 +3,27 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-{% import 'partials/form_macros.html.twig' as macros %}
+    {% import 'partials/form_macros.html.twig' as macros %}
 
-    <h1>Inscription</h1>
+    <section class="form">
+        <h1 class="form-title">Inscription</h1>
 
-    {{ form_start(registrationForm) }}
+        {{ form_start(registrationForm) }}
 
-    <div class="row">
-        <div class="col-md-6">
+        <div class="form-grid">
             {{ macros.formRow(registrationForm.nom) }}
-        </div>
-        <div class="col-md-6">
             {{ macros.formRow(registrationForm.prenom) }}
         </div>
-    </div>
 
-    {{ macros.formRow(registrationForm.email) }}
-    {{ macros.formRow(registrationForm.plainPassword) }}
+        {{ macros.formRow(registrationForm.email) }}
+        {{ macros.formRow(registrationForm.plainPassword) }}
 
-    <button type="submit" class="btn">Inscrivez-Vous</button>
+        <button type="submit" class="btn">Inscrivez-Vous</button>
 
-    {{ form_end(registrationForm) }}
+        {{ form_end(registrationForm) }}
+
+        <div class="connexion-link">
+            <p>Déjà un compte ? <a href="{{ path('app_login') }}">Connectez-vous</a></p>
+        </div>
+    </section>
 {% endblock %}

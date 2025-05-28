@@ -3,43 +3,59 @@
 {% block title %}Récapitulatif de commande{% endblock %}
 
 {% block body %}
-<h1 class="text-xl font-bold mb-4">Récapitulatif de votre commande</h1>
 
-<table class="table-auto w-full border mb-6">
-    <thead>
-        <tr>
-            <th class="border px-4 py-2">Article</th>
-            <th class="border px-4 py-2">Taille</th>
-            <th class="border px-4 py-2">Couleur</th>
-            <th class="border px-4 py-2">Prix</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for ligne in panier %}
+<div class="panier-container">
+
+    <h1 class="page-title">Récapitulatif de votre commande</h1>
+
+    <table class="table">
+        <thead>
             <tr>
-                <td class="border px-4 py-2">{{ ligne.article.titre }}</td>
-                <td class="border px-4 py-2">{{ ligne.taille }}</td>
-                <td class="border px-4 py-2">{{ ligne.couleur }}</td>
-                <td class="border px-4 py-2">{{ ligne.article.prix }} €</td>
+                <th>Image</th>
+                <th>Article</th>
+                <th>Taille</th>
+                <th>Couleur</th>
+                <th>Prix</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for ligne in panier %}
+                <tr>
+                <td><img src="{{ asset('uploads/articles/' ~ ligne.article.image) }}" alt="Image de l'article" class="article-image"></td>
+                    <td>{{ ligne.article.titre }}</td>
+                    <td>{{ ligne.taille }}</td>
+                    <td>{{ ligne.couleur }}</td>
+                    <td>{{ ligne.article.prix }} €</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<p class="text-right text-lg font-semibold mb-6">Total : {{ total }} €</p>
+    <p class="total">Total : {{ total }} €</p>
 
-<h2 class="text-lg font-bold mb-2">Adresse de livraison</h2>
+    <section class="form">
+        <h2>Adresse de livraison</h2>
 
-{{ form_start(form) }}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {{ form_row(form.numero) }}
-        {{ form_row(form.rue) }}
-        {{ form_row(form.codePostal) }}
-        {{ form_row(form.ville) }}
-    </div>
-    <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
-        Valider la commande
-    </button>
-{{ form_end(form) }}
+        {{ form_start(form) }}
+            
+            <div class="form-grid">
+                {{ form_row(form.numero) }}
+            </div>
+            <div class="form-grid">
+                {{ form_row(form.rue) }}
+            </div> 
+            <div class="form-grid">
+                {{ form_row(form.codePostal) }}
+            </div>
+            <div class="form-grid">
+                {{ form_row(form.ville) }}
+            </div>
+
+            <button type="submit" class="btn">
+                Valider la commande
+            </button>
+            {{ form_end(form) }}
+    </section>
+</div>
 
 {% endblock %}

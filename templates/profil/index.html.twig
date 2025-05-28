@@ -3,19 +3,26 @@
 {% block title %}Profil{% endblock %}
 
 {% block body %}
-<h1>Mon profil</h1>
+        
+<div class="profil-container">
+  <h1 class="profil-title">Mon profil</h1>
 
-<p><strong>Nom :</strong> {{ user.nom }}</p>
-<p><strong>Prénom :</strong> {{ user.prenom }}</p>
-<p><strong>Email :</strong> {{ user.email }}</p>
-<p><strong>Téléphone :</strong> {{ user.telephone }}</p>
+  <div class="profil-grid">
+    <div class="profil-infos">
+      <h2>Mes informations</h2>
+      <p><strong>Nom :</strong> {{ user.nom }}</p>
+      <p><strong>Prenom :</strong> {{ user.prenom }}</p>
+      <p><strong>Mail :</strong> {{ user.email }}</p>
+      <p><strong>Téléphone :</strong> {{ user.telephone }}</p>
+    </div>
 
-
-<a href="{{ path('profil_edit') }}">✏️ Modifier mon profil</a><br>
-<a href="{{ path('change_password') }}">🔐 Changer mon mot de passe</a><br>
-<a href="{{ path('profil_commandes') }}">📦 Suivre mes commandes</a><br>
-<a href="{{ path('delete_profil') }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">🗑️ Supprimer mon compte</a>
-
-
+    <div class="profil-actions">
+      <a href="{{ path('profil_edit') }}" class="profil-link">✏️ Modifier mes infos</a>
+      <a href="{{ path('change_password') }}" class="profil-link">🔐 Changer mon mot de passe</a>
+      <a href="{{ path('profil_commandes') }}" class="profil-link">📦 Voir mes commandes</a>
+      <a href="{{ path('delete_profil') }}" class="profil-link danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">🗑️ Supprimer mon compte</a>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

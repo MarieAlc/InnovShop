@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container my-5">
+<div class="container">
 <h1>Historique de mes commandes</h1>
 
     <!-- Commandes en cours -->
-    <h2 class="mb-3">Commandes en cours</h2>
+    <h2>Commandes en cours</h2>
     {% set enCours = commandes|filter(c => c.status not in ['livree', 'annulée']) %}
     {% if enCours is empty %}
         <p>Aucune commande en cours.</p>
@@ -28,7 +28,7 @@
                         <td>{{ commande.statusLabel }}</td>
                         <td>{{ commande.total|number_format(2, ',', ' ') }} €</td>
                         <td>
-                            <a href="{{ path('commande_detail', {'id': commande.id}) }}" class="btn btn-primary btn-sm">Détails</a>
+                            <a href="{{ path('commande_detail', {'id': commande.id}) }}" class="btn">Détails</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -36,10 +36,9 @@
         </table>
     {% endif %}
 
-    <hr class="my-5">
 
     <!-- Commandes livrées -->
-    <h2 class="mb-3">Vos anciennes commandes</h2>
+    <h2>Vos anciennes commandes</h2>
     {% set anciennes = commandes|filter(c => c.status == 'livree') %}
     {% if anciennes is empty %}
         <p>Vous n'avez pas encore de commande livrée.</p>
@@ -60,7 +59,7 @@
                         <td>{{ commande.createdAt|date('d/m/Y') }}</td>
                         <td>{{ commande.total|number_format(2, ',', ' ') }} €</td>
                         <td>
-                            <a href="{{ path('commande_detail', {'id': commande.id}) }}" class="btn btn-secondary btn-sm">Détails</a>
+                            <a href="{{ path('commande_detail', {'id': commande.id}) }}" class="btn">Détails</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -68,10 +67,8 @@
         </table>
     {% endif %}
 
-    <hr class="my-5">
-
     <!-- Commandes annulées -->
-    <h2 class="mb-3">Commandes annulées</h2>
+    <h2>Commandes annulées</h2>
     {% set annulees = commandes|filter(c => c.status == 'annulée') %}
     {% if annulees is empty %}
         <p>Aucune commande annulée.</p>
@@ -94,7 +91,7 @@
                         <td>{{ commande.statusLabel }}</td>
                         <td>{{ commande.total|number_format(2, ',', ' ') }} €</td>
                         <td>
-                            <a href="{{ path('commande_detail', {'id': commande.id}) }}" class="btn btn-outline-danger btn-sm">Détails</a>
+                            <a href="{{ path('commande_detail', {'id': commande.id}) }}" class="btn">Détails</a>
                         </td>
                     </tr>
                 {% endfor %}

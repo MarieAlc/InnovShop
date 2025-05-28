@@ -4,46 +4,53 @@
     <meta charset="UTF-8">
     <title>Confirmation de votre commande</title>
 </head>
-<body style="font-family: Arial, sans-serif;">
+<body style="font-family: Arial, sans-serif; background-color: #f8f5f2; padding: 20px; color: #333333;">
 
-    <h1>Bonjour {{ user.prenom }},</h1>
+    <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; padding: 20px; border: 1px solid #e0dcdc;">
 
-    <p>Merci pour votre commande sur <strong>InnovShop</strong> !</p>
+        <h1 style="color: #c0392b;">Bonjour {{ user.prenom }},</h1>
 
-    <h2>Détails de votre commande :</h2>
+        <p style="font-size: 16px;">Merci pour votre commande sur <strong>InnovShop</strong> !</p>
 
-    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-        <thead>
-            <tr>
-            
-                <th>Article</th>
-                <th>Couleur</th>
-                <th>Taille</th>
-                <th>Prix</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ligne in commande.commandeLignes %}
-                <tr>
-                
-                    <td>{{ ligne.article.titre }}</td>
-                    <td>
-                        
-                        {{ ligne.couleur.valeur is defined ? ligne.couleur.valeur : ligne.couleur }}
-                    </td>
-                    <td>
-                        {{ ligne.taille.valeur is defined ? ligne.taille.valeur : ligne.taille }}
-                    </td>
-                    <td>{{ ligne.prix|number_format(2, ',', ' ') }} €</td>
+        <h2 style="color: #8e44ad; font-size: 18px; margin-top: 30px;">Détails de votre commande :</h2>
+
+        <table cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+                <tr style="background-color: #f2f2f2; color: #333;">
+                    <th align="left" style="border-bottom: 2px solid #ddd;">Article</th>
+                    <th align="left" style="border-bottom: 2px solid #ddd;">Couleur</th>
+                    <th align="left" style="border-bottom: 2px solid #ddd;">Taille</th>
+                    <th align="left" style="border-bottom: 2px solid #ddd;">Prix</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for ligne in commande.commandeLignes %}
+                    <tr>
+                        <td style="border-bottom: 1px solid #eee;">{{ ligne.article.titre }}</td>
+                        <td style="border-bottom: 1px solid #eee;">
+                            {{ ligne.couleur.valeur is defined ? ligne.couleur.valeur : ligne.couleur }}
+                        </td>
+                        <td style="border-bottom: 1px solid #eee;">
+                            {{ ligne.taille.valeur is defined ? ligne.taille.valeur : ligne.taille }}
+                        </td>
+                        <td style="border-bottom: 1px solid #eee;">{{ ligne.prix|number_format(2, ',', ' ') }} €</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <h3 style="text-align: right; margin-top: 20px;">Total : <strong>{{ commande.total|number_format(2, ',', ' ') }} €</strong></h3>
+        <h3 style="text-align: right; margin-top: 20px; color: #2c3e50;">
+            Total : <strong>{{ commande.total|number_format(2, ',', ' ') }} €</strong>
+        </h3>
 
-    <p>Nous vous tiendrons informé de l’expédition. N'hésitez pas à nous contacter si vous avez la moindre question.</p>
+        <p style="font-size: 15px; margin-top: 30px;">
+            Nous vous tiendrons informé de l’expédition.<br>
+            N'hésitez pas à nous contacter si vous avez la moindre question.
+        </p>
 
-    <p>À bientôt sur <strong>InnovShop</strong> !</p>
+        <p style="font-size: 15px; margin-top: 20px;">À bientôt sur <strong>InnovShop</strong> !</p>
+
+    </div>
+
 </body>
 </html>

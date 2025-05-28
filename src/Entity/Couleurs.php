@@ -110,6 +110,6 @@ class Couleurs
 
     public function __toString(): string
     {
-        return $this->valeur;
+        return $this->valeur ?? '';
     }
 }

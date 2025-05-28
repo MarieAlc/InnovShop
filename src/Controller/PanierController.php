@@ -20,10 +20,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class PanierController extends AbstractController
 {
     #[Route('/panier', name:'panier')]
-    #[IsGranted('ROLE_USER')]
     public function voirPanier(PanierRepository $panierRepository): Response
     {
         $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('error', 'Veuillez vous connecter pour accéder à votre panier.');
+            return $this->redirectToRoute('app_login');
+        }
         $panier = $panierRepository->findBy(['user' => $user]);
 
         $total = 0;
