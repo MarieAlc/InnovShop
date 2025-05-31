@@ -12,6 +12,9 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(ArticlesRepository $articlesRepository): Response
     {
+         if ($this->getUser()) {
+            $this->addFlash('success', 'Vous êtes connecté en tant que ' . $this->getUser()->getUserIdentifier());
+        }
 
         $articlesALaUne = $articlesRepository->findBy(['aLaUne' => true], ['createdAt' => 'DESC'], 3);
         $dernierArticles = $articlesRepository->findBy([], ['id' => 'DESC'], 3);
