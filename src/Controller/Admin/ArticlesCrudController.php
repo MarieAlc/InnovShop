@@ -32,7 +32,8 @@ class ArticlesCrudController extends AbstractCrudController
         return [
             TextField::new('titre'),
             TextField::new('detail'),
-            Textfield::new('specification'),
+            TextField::new('specification'),
+            TextField::new('prix'),
             ImageField::new('image')
                 ->setBasePath('uploads/articles')
                 ->setUploadDir('public/uploads/articles')
